@@ -1,17 +1,20 @@
+# -*- coding: utf-8 -*-
+
 import os
-from PyQt5.QtWidgets import *
-from PyQt5.QtGui import *
+from PyQt5.QtWidgets import QApplication, QLabel, QWidget, QPushButton, QVBoxLayout, QGridLayout
+from PyQt5.QtGui import QIcon, QPixmap
 import sys
 
 
 class ClassifyImages(QWidget):
+
     def __init__(self, classesfile, inputdir, outputfile):
         super().__init__()
         self.title = "ImageClassifier"
         self.left = 50
         self.top = 50
-        self.width = 1024
-        self.height = 768
+        self.width = 1920
+        self.height = 1080
 
         self.classes = open(classesfile, 'r').read().strip().split(',')
         self.nclass = len(self.classes)
@@ -31,7 +34,7 @@ class ClassifyImages(QWidget):
             for line in self.fileAccess:
                 print(line.strip())
                 if line.split(',')[1].strip() != "None":
-                    print("adding...")
+                    print("사진을 추가하는 중입니다.")
                     self.classifications[line.split(',')[0]] = line.split(',')[1].strip()
                     self.currentIndex += 1
             self.fileAccess.close()
@@ -53,6 +56,7 @@ class ClassifyImages(QWidget):
 
         return classificationClick
 
+    # 다음 버튼
     def nextImageClick(self):
         thisImageClass = None
         for i, btn in enumerate(self.classButtons):
@@ -69,6 +73,7 @@ class ClassifyImages(QWidget):
         [a.setChecked(False) for a in self.classButtons]
         self.draw()
 
+    # 완료 버튼
     def finishedClick(self):
         self.fileAccess.close()
         self.fileAccess = open(self.outpath, 'wt')
@@ -77,6 +82,7 @@ class ClassifyImages(QWidget):
         self.fileAccess.close()
         sys.exit()
 
+    # 이전 버튼
     def prevImageClick(self):
         self.currentIndex -= 1
         self.currentIndex = max(0, self.currentIndex)
@@ -92,11 +98,10 @@ class ClassifyImages(QWidget):
         self.image.setPixmap(self.cur_pixmap)
         self.imgName.setText(self.currentImagePath)
 
+    # UI 그리기
     def initUI(self):
         self.setWindowTitle(self.title)
-
         self.setGeometry(self.left, self.top, self.width, self.height)
-
         self.layout = QGridLayout()
         self.setLayout(self.layout)
         for i, classification in enumerate(self.classes):
