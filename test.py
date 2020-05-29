@@ -1,6 +1,6 @@
 import os
-from PyQt5.QtWidgets import *
-from PyQt5.QtGui import *
+from PyQt5.QtWidgets import QApplication, QLabel, QWidget, QPushButton, QVBoxLayout, QGridLayout
+from PyQt5.QtGui import QIcon, QPixmap
 import sys
 
 
@@ -106,14 +106,15 @@ class ClassifyImages(QWidget):
             self.classButtons[-1].clicked.connect(self.nextImageClick)
             self.classButtons[-1].setCheckable(True)
 
+        # 이전 버튼
         prevBtn = QPushButton("Previous")
         prevBtn.clicked.connect(self.prevImageClick)
         self.layout.addWidget(prevBtn, self.nclass, 1)
-
+        # 다음 버튼
         nextBtn = QPushButton("Next")
         nextBtn.clicked.connect(self.nextImageClick)
         self.layout.addWidget(nextBtn, self.nclass, 2)
-
+        # 완료 버튼
         nextBtn = QPushButton("Finish")
         nextBtn.clicked.connect(self.finishedClick)
         self.layout.addWidget(nextBtn, self.nclass, 3)
