@@ -24,7 +24,6 @@ class MyApp(QWidget):
         frameGm.moveCenter(centerPoint)
         self.move(frameGm.topLeft())
 
-
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = MyApp()
